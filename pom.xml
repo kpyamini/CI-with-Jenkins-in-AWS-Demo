@@ -53,8 +53,7 @@
     <distributionManagement>
     <repository>
        <id>releases</id>
-       <name>Releases</name>
-       <url>http://35.246.73.206:8081/nexus/content/repositories/devops/</url>
+       <url>http://35.246.73.206:8081/nexus/content/repositories/devops</url>
     </repository>
     </distributionManagement>
 </project>
