@@ -2,10 +2,10 @@ pipeline {agent any environment {
         PROJECT_ID = 'kube-demo-project'
         CLUSTER_NAME = 'kube-demo1'
         LOCATION = 'us-central1-a'
-        CREDENTIALS_ID = 'kubernetes'
+        CREDENTIALS_ID = 'kuberneteslogin'
     }
     stages {
-    	   	stage ("Build") {
+    	   	stage ("Build") {steps {
 		                   sh 'mvn package'}}
         	stage ("Build image") {steps {
                 			script {myapp = docker.build("223011/k8s:${env.BUILD_ID}")}}}
