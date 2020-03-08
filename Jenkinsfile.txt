@@ -1,7 +1,7 @@
 pipeline {
     agent any 
     environment {
-        PROJECT_ID = 'kube-demo-project'
+        PROJECT_ID = 'devops-yamini'
         CLUSTER_NAME = 'kube-demo1'
         LOCATION = 'us-central1-a'
         CREDENTIALS_ID = 'kuberneteslogin'
