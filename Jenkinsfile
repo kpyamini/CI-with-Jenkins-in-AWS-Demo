@@ -1,5 +1,5 @@
 pipeline {
-    agent any 
+    agent any
     environment {
         PROJECT_ID = 'devops-yamini'
         CLUSTER_NAME = 'cluster-1'
@@ -7,16 +7,40 @@ pipeline {
         CREDENTIALS_ID = 'kuberneteslogin'
     }
     stages {
-    	   	stage ("Build") {
-			steps {
-		                sh 'mvn package'}}
-        	stage ("Build image") {
-			steps {
-                			script {myapp = docker.build("223011/k8s:${env.BUILD_ID}")}}}
-        	stage ("Push image") {
-			steps {script {docker.withRegistry('https://registry.hub.docker.com', 'docker') {myapp.push("${env.BUILD_ID}"
-)}}} }        
-        	stage('Deploy to Google Kubernetes') {
+        stage("Checkout code") {
+            steps {
+                checkout scm
+            }
+        }
+		 stage("Build") {
+            steps {
+               echo "cleaning and packaging"
+			   sh 'mvn clean package'
+            }
+        }
+		 stage("Test") {
+            steps {
+                echo "Testing"
+			   sh 'mvn test'
+            }
+        }
+        stage("Build image") {
+            steps {
+                script {
+                    myapp = docker.build("223011/k8s:${env.BUILD_ID}")
+                }
+            }
+        }
+        stage("Push image") {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker') {
+                            myapp.push("${env.BUILD_ID}")
+                    }
+                }
+            }
+        }        
+        stage('Deploy to Google Kubernetes') {
             steps{
 			    echo "Deployment started"
 				sh 'ls -ltr'
@@ -26,4 +50,5 @@ pipeline {
 				echo "Deployment Finished"
             }
         }
-    }}
+    }    
+}
