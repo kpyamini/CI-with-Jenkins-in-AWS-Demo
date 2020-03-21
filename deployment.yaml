@@ -1,29 +1,29 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: deployment
 metadata:
-  name: webapp2
+  name: webapp3
 spec:
   replicas: 3
   selector:
    matchLabels:
-    app: webapp2
+    app: webapp3
   template:
     metadata:
       labels:
-        app: webapp2
+        app: webapp3
     spec:
       containers:
-      - name: webapp2
+      - name: webapp3
         image: 223011/k8s:tagversion
         ports:
         - containerPort: 8080
 ---
 apiVersion: v1
-kind: Service
+kind: service
 metadata:
-  name: webapp2-svc
+  name: webapp3-svc
   labels:
-    app: webapp2
+    app: webapp3
 spec:
   type: LoadBalancer
   ports:
@@ -31,4 +31,4 @@ spec:
     port: 80
     targetPort: 8080
   selector:
-    app: webapp2
+    app: webapp3
