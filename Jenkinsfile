@@ -27,14 +27,14 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    myapp = docker.build("223011/k8s:${env.BUILD_ID}")
+                    myapp = docker.build("gcr.io/devops-yamini/kubernetesrepos:${env.BUILD_ID}")
                 }
             }
         }
         stage("Push image") {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker') {
+                    docker.withRegistry('https://gcr.io', 'gcr:kuberneteslogin') {
                             myapp.push("${env.BUILD_ID}")
                     }
                 }
